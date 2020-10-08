@@ -1,0 +1,154 @@
+importar  sqlite3
+conn  =  sqlite3 . conectar ( "agendatelefonica.db" )
+cursor  =  conn . cursor ()
+
+
+def  creartabla ():
+  cursor . ejecutar ( "CREAR TABLA contactos (ID entero clave primaria autoincremento, nombre varchar (15), apellido varchar (25), numero texto)" )
+  conn . cometer ()
+
+def  insertar ():
+  cursor  =  conn . cursor ()
+  cursor . ejecutar ( "INSERT INTO contactos (nombre, apellido, numero) VALUES (?,?,?)" , ( nombre , apellido , numero ))
+  conn . cometer ()
+
+def  listar ():
+  query1  =  "SELECT * FROM contactos"
+  cursor  =  conn . cursor ()
+  cursor . ejecutar ( consulta1 )
+  filas  =  cursor . fetchall ()
+  para  fila  en  filas :
+    print ( "ID:" , fila [ 0 ], "NOMBRE:" , fila [ 1 ], "APELLIDO:" , fila [ 2 ], "NUMERO:" , fila [ 3 ])
+    fila  =  cursor . fetchall ()
+
+
+def  listarID ():
+  cursor  =  conn . cursor ()
+  cursor . ejecutar ( "SELECCIONAR * DESDE contactos donde ID = (?)" , ( d ))
+  filas  =  cursor . fetchone ()
+  para  fila  en  filas :
+    imprimir ( "ID:" , fila [ 0 ])
+    print ( "Nombre:" , fila [ 1 ])
+    print ( "Apellido:" , fila [ 2 ])
+    print ( "Numero:" , fila [ 3 ])
+    fila  =  cursor . fetchone ()
+
+def  eliminar ():
+  cursor  =  conn . cursor ()
+  cursor . ejecutar ( "ELIMINAR DE contactos donde ID =?" , ( d ))
+  conn . cometer ()
+
+def  buscarnombre ():
+  cursor  =  conn . cursor ()
+  querynombre =  "SELECT * FROM contactos where name like '% {}%'"
+  cursor . ejecutar ( querynombre . formato ( nombre ,))
+  filas  =  cursor . fetchall ()
+  para  fila  en  filas :
+    imprimir ( "ID:" , fila [ 0 ])
+    print ( "Nombre:" , fila [ 1 ])
+    print ( "Apellido:" , fila [ 2 ])
+    print ( "Numero:" , fila [ 3 ])
+    fila  =  cursor . fetchall ()
+
+def  buscartelefono ():
+  querynum =  "SELECT * FROM contactos donde numero como '% {}%'"
+  cursor . ejecutar ( querynum . formato ( numero ,))
+  filas  =  cursor . fetchall ()
+  para  fila  en  filas :
+    imprimir ( "ID:" , fila [ 0 ])
+    print ( "Nombre:" , fila [ 1 ])
+    print ( "Apellido:" , fila [ 2 ])
+    print ( "Numero:" , fila [ 3 ])
+    fila  =  cursor . fetchall ()
+
+def  modificarnombre ():
+  cursor  =  conn . cursor ()
+  cursor . ejecutar ( "ACTUALIZAR contactos SET nombre =? donde ID =?" , ( n , d ))
+  conn . cometer ()
+
+def  modificara apellido ():
+  cursor  =  conn . cursor ()
+  cursor . ejecutar ( "ACTUALIZAR contactos SET apellido =? donde ID =?" , ( ap , d ))
+  conn . cometer ()
+
+def  modificarnumero ():
+  cursor  =  conn . cursor ()
+  cursor . ejecutar ( "ACTUALIZAR contactos SET numero =? donde ID =?" , ( num , d ))
+  conn . cometer ()
+
+def  menu ():
+  imprimir ( "Agenda Telefónica: 3" )
+  print ( "Seleccione una opcion: 3" )
+  imprimir ( "1- Agregar un nuevo contacto" )
+  print ( "2- Ver todos los contactos" )
+  imprimir ( "3- Seleccionar contactos" )
+  imprimir ( "4- Eliminar un contactos" )
+  imprimir ( "5- Modificar contactos" )
+  imprimir ( "6- buscar contactos" )
+  imprimir ( "7- Salir" )
+
+mientras es  cierto :
+  menú ()
+  c  =  int ( input ( "Digite su opcion:" ))
+  si  c  ==  1 :
+    mientras es  cierto :
+      nombre  =  input ( "nombre:" )
+      apellido  =  input ( "Nombre del Apellido:" )
+      numero  =  input ( "Numero del contacto:" )
+      insertar ()
+      print ( "desea agregar otro?" )
+      imprimir ( "1- si" )
+      imprimir ( "2- no" )
+      si =  int ( input ( "digite una opcion:" ))
+      si  si  ==  2 :
+        rotura
+  si  c  ==  2 :
+    listar ()
+    t  =  input ( "volver al menú:" )
+  si  c  ==  3 :
+    d  =  input ( "Digite ID que desea ver:" )
+    listarID ()
+    t  =  input ( "volver al menú:" )
+  si  c  ==  4 :
+    d  =  input ( "Digite ID o campo a eliminar:" )
+    eliminar ()
+    t  =  input ( "volver al menú:" )
+  si  c  ==  5 :
+    print ( "1- Modificar nombre" )
+    print ( "2- Modificar apellido" )
+    print ( "3- Modificar numero" )
+    m  =  int ( input ( "Digite una opcion:" ))
+    si  m  ==  1 :
+      listar ()
+      n  =  input ( "Nombre a modificar:" )
+      d  =  int ( input ( "ID del campo a modificar:" ))
+      modificarnombre ()
+      print ( "Nombre cambiado exitosamente" )
+      t  =  input ( "volver al menú:" )
+    si  m  == 2 :
+      listar ()
+      ap  =  input ( "apellido a modificar:" )
+      d  =  input ( "ID del campo a modificar:" )
+      modificara Apellidos ()
+      t  =  input ( "volver al menú:" )
+    si  m  ==  3 :
+      listar ()
+      num  =  input ( "numero a modificar:" )
+      d  =  int ( "ID del campo a modificar:" )
+      modificarnumero ()
+      t  =  input ( "volver al menú:" )
+  si  c  ==  6 :
+    print ( "1- Buscar nombre" )
+    print ( "2- Buscar numero" )
+    b  =  int ( input ( "Digite una opcion:" ))
+    si  b  ==  1 :
+      nombre  =  input ( "buscar nombre:" )
+      buscarnombre ()
+      t  =  input ( "volver al menú:" )
+    si  b  == 2 :
+      numero  =  input ( "buscar numero:" )
+      buscartelefono ()
+      t  =  input ( "volver al menú:" )
+  si  c  ==  7 :
+    rotura
+conn . cerrar ()
